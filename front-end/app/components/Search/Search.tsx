@@ -1,0 +1,107 @@
+
+import React, { useState } from 'react';
+
+import { Box, Grid, Container } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+import AddSkillButton from '../Layout/AddSkillButon';
+import Item from '../List/Item';
+
+import { CandidateService, IListCandidate  } from '@/shared/services/api/candidates/CandidateService';
+import Notification from '../Layout/Notification';
+
+const SearchCandidate: React.FC = () => {
+    const [skills, setSkills] = useState<string[]>(['']);
+    const [resultSearch, setResultSearch] = useState<IListCandidate>();
+    const [message, setMessage] = useState<string | null>(null);
+    const [type, setType] = useState<'error' | 'success'>('success');    
+    const [openAlert, setOpenAlert] = useState<boolean>(false);
+
+    const handleAddSkill = () => {
+        setSkills([...skills, '']);
+    };
+
+    const handleChangeSkill = (index: number, value: string) => {
+        const updatedSkills = [...skills];
+        updatedSkills[index] = value;
+        setSkills(updatedSkills);
+    };
+
+    const handleSearchCandidate = () => {
+        const searchSkills = skills.join(",");
+        CandidateService.getBySkill(searchSkills).then((result) => {
+            if (result instanceof Error) {
+                setMessage(result.message);
+                setOpenAlert(true);
+                setType('error');
+                setSkills(['']);
+            } else {
+                setResultSearch(result);
+                setSkills(['']);
+                setType('success');
+            }
+        })        
+    };
+
+
+    return (
+        <Container maxWidth="sm">
+            <Box m={2} p={4} border="1px solid #ddd" borderRadius={4}>
+                <h1 className="text-2xl mb-4">Buscar Candidato</h1>
+
+                <h3 className="text-lg mt-4 mb-2">Skills</h3>
+                {skills.map((skill, index) => (
+                    <Grid container spacing={2} key={index} alignItems="center">
+                        <Grid item xs={10}>
+                            <TextField
+                                label="Skill"
+                                value={skill}
+                                onChange={(e) => handleChangeSkill(index, e.target.value)}
+                                fullWidth
+                                margin="normal"
+                            />
+                        </Grid>
+                        {index === skills.length - 1 && (
+                            <Grid item xs={2}>
+                                <AddSkillButton onClick={handleAddSkill} />                                   
+                            </Grid>
+                        )}
+                    </Grid>
+                ))}
+
+                <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={handleSearchCandidate}
+                    className="bg-blue-500 mt-4"                
+                >
+                    Buscar
+                </Button>                
+
+                {/* Mostrar resultados da busca */}
+                {resultSearch && (
+                    <Container maxWidth="sm">   
+                        <h3 className="text-lg mt-4 mb-2">Resultado da Busca</h3>
+                        <Item key={resultSearch?._id} name={resultSearch?.name} skills={resultSearch?.skills} />
+                    </Container>
+                )}
+
+            </Box>
+
+            {message && (
+                <Notification
+                    message={message}
+                    type={type}
+                    onClose={() => {
+                        setMessage(null);
+                        setOpenAlert(false);
+                        setType('success');
+                    }}
+                    />
+            )}
+        </Container>
+    );
+};
+
+export default SearchCandidate;

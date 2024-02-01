@@ -1,0 +1,121 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Candidates API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/candidates": {
+      "post": {
+        "summary": "Create a candidate",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Candidate object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "skills": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Candidate created successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": { "type": "string" },
+                "name": { "type": "string" },
+                "skills": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "createdAt": { "type": "string" },
+                "updatedAt": { "type": "string" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/candidates/search": {
+      "get": {
+        "summary": "Search candidates by skills",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "skills",
+            "type": "string",
+            "description": "Skills to be searched",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Candidate found successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "_id": { "type": "string" },
+                "name": { "type": "string" },
+                "skills": {
+                  "type": "array",
+                  "items": { "type": "string" }
+                },
+                "createdAt": { "type": "string" },
+                "updatedAt": { "type": "string" }
+              }
+            }
+          },
+          "404": {
+            "description": "Candidate not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

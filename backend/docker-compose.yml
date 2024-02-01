@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  database:
+    image: mongo
+    ports:
+      - 27017:27017
+    restart: always
+    networks:
+      - candidatos
+
+  candidatos_api:
+    image: node:20-alpine
+    volumes:
+      - .:/candidatos_api
+    working_dir: /candidatos_api
+    depends_on:
+      - database
+    ports:
+      - 3001:3001
+      - 9229:9229
+    env_file: .env
+    environment:
+      - HOST_PORT=3001
+      - APP_NAME=candidate_api
+      - DB_URI=mongodb://database:27017/
+      - DB_NAME=candidate
+    command: ash -c "npm ci && npm run dev"
+    networks:
+      - candidatos
+
+networks:
+  candidatos:
+    driver: bridge

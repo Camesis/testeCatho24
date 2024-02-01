@@ -1,0 +1,39 @@
+{
+  "name": "candidatos-api",
+  "version": "1.0.0",
+  "description": "A API to manage candidates",
+  "author": "jennifer",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --ignore-watch node_modules src/index.ts",
+    "start": "tsc && node dist/index.js",
+    "test": "jest --bail --forceExit --testPathIgnorePatterns='tests/e2e'",
+    "test:e2e": "jest --bail --forceExit tests/e2e"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.11.0",
+    "axios": "^1.6.6",
+    "dotenv": "^16.3.1",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.0",
+    "@types/swagger-ui-express": "^4.1.6",
+    "@types/yup": "^0.32.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.2",
+    "http-status": "^1.7.3",
+    "mongoose": "^8.1.0",
+    "swagger-ui-express": "^5.0.0",
+    "ts-node": "^10.9.2",
+    "yup": "^1.3.3"
+  }
+}
