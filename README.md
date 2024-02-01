@@ -8,7 +8,7 @@ As Requisições utilizadas são POST(para a adição de candidatos) e GET(para 
 Na parte do Front utilizei Next.js para criar uma interface básica que interaja com a API. A aplicação conta com uma página para cadastrar candidatos e adicionar novas habilidades, bem como uma página para buscr candidatos com base nas habilidades e exibir os resultados.
 
 <br>
-<img src="assets/tela1.png" width=100% height=300>
+<img src="assets/tela1.png" width=100% height=320>
 <br><br>
 
 ![Concluido](http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge)
